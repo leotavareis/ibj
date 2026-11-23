@@ -343,3 +343,187 @@ body {
     font-size: 1.2rem;
   }
 }
+
+/* ===== Botões do hero: Flow Button (setas + círculo que expande) ===== */
+.ibj-hero-botoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .9rem;
+}
+
+.ibj-flow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 320px;
+  padding: .9rem 2.2rem;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, .55);
+  border-radius: 100px;
+  background: rgba(0, 0, 0, .25);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .6s cubic-bezier(.23, 1, .32, 1);
+}
+
+.ibj-flow-texto {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-12px);
+  transition: transform .8s ease-out;
+}
+
+.ibj-flow-seta {
+  position: absolute;
+  z-index: 9;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all .8s cubic-bezier(.34, 1.56, .64, 1);
+}
+.ibj-flow-seta--esq { left: -25%; }
+.ibj-flow-seta--dir { right: 16px; }
+
+.ibj-flow-circulo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ibj-verde);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: all .8s cubic-bezier(.19, 1, .22, 1);
+}
+
+.ibj-flow:hover,
+.ibj-flow:focus-visible {
+  color: #fff;
+  border-color: transparent;
+  border-radius: 12px;
+}
+.ibj-flow:hover .ibj-flow-texto,
+.ibj-flow:focus-visible .ibj-flow-texto { transform: translateX(12px); }
+.ibj-flow:hover .ibj-flow-seta--esq,
+.ibj-flow:focus-visible .ibj-flow-seta--esq { left: 16px; }
+.ibj-flow:hover .ibj-flow-seta--dir,
+.ibj-flow:focus-visible .ibj-flow-seta--dir { right: -25%; }
+.ibj-flow:hover .ibj-flow-circulo,
+.ibj-flow:focus-visible .ibj-flow-circulo { width: 260px; height: 260px; opacity: 1; }
+.ibj-flow:active { transform: scale(.95); }
+.ibj-flow:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+@media (min-width: 576px) {
+  .ibj-hero-botoes { flex-direction: row; gap: 1rem; }
+  .ibj-flow { width: auto; min-width: 230px; }
+}
+
+/* toque: sem hover, deixa as setas visíveis e o botão legível */
+@media (max-width: 380px) {
+  .ibj-flow { padding: .85rem 1.5rem; font-size: .95rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ibj-flow, .ibj-flow * { transition-duration: .01s !important; }
+}
+
+/* ===== Seção A Igreja: foto de fundo + máscara ===== */
+.ibj-igreja {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+.ibj-igreja-bg {
+  position: absolute;
+  inset: 0;
+  background: url('../img/igreja-fachada.webp') center 60% / cover no-repeat;
+  transform: scale(1.04);
+}
+/* máscara: vinho da marca + escurecimento maior do lado do texto */
+.ibj-igreja-mascara {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(30, 10, 12, .92) 0%, rgba(54, 20, 23, .82) 40%, rgba(20, 20, 20, .35) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, .25) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, .45) 100%);
+}
+.ibj-igreja-mascara::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--ibj-verde-logo), transparent 70%);
+}
+.ibj-igreja-conteudo { z-index: 2; }
+.ibj-igreja-painel { max-width: 620px; }
+
+.ibj-igreja-eyebrow {
+  display: inline-block;
+  margin-bottom: .6rem;
+  padding-left: 2.4rem;
+  position: relative;
+  font-size: .85rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ibj-verde-logo);
+}
+.ibj-igreja-eyebrow::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  width: 1.8rem; height: 2px;
+  background: var(--ibj-verde-logo);
+}
+.ibj-igreja-titulo {
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  color: #fff;
+}
+.ibj-igreja-texto {
+  font-size: 1.12rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, .88);
+}
+.ibj-igreja-lema {
+  margin: 1.5rem 0;
+  padding: .2rem 0 .2rem 1.1rem;
+  border-left: 4px solid var(--ibj-verde-logo);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: #fff;
+}
+.ibj-igreja-pastor { color: rgba(255, 255, 255, .8); margin: 0; }
+.ibj-igreja-pastor strong { color: #fff; }
+.ibj-igreja-pastor a { color: var(--ibj-verde-logo); text-decoration: none; }
+.ibj-igreja-pastor a:hover { text-decoration: underline; }
+
+@media (min-width: 992px) {
+  .ibj-igreja { padding: 7rem 0; min-height: 640px; }
+  .ibj-igreja-bg { background-attachment: fixed; transform: none; }
+}
+@media (max-width: 767px) {
+  .ibj-igreja { padding: 3.5rem 0; min-height: 0; }
+  .ibj-igreja-bg { background-position: 62% center; }
+  .ibj-igreja-mascara {
+    background: linear-gradient(180deg, rgba(30, 10, 12, .9) 0%, rgba(40, 15, 17, .72) 100%);
+  }
+  .ibj-igreja-texto { font-size: 1.02rem; }
+}
