@@ -475,12 +475,12 @@ body {
 }
 .ibj-igreja-mascara::before {
   top: 0;
-  height: 70px;
+  height: 36px;
   background: linear-gradient(180deg, #0a080c 0%, rgba(10, 8, 12, .7) 35%, rgba(10, 8, 12, 0) 100%);
 }
 .ibj-igreja-mascara::after {
   bottom: 0;
-  height: 70px;
+  height: 36px;
   background: linear-gradient(0deg, #fff 0%, rgba(255, 255, 255, .75) 30%, rgba(255, 255, 255, 0) 100%);
 }
 .ibj-igreja-conteudo { z-index: 2; }
@@ -624,7 +624,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 70px;
+  height: 36px;
   background: linear-gradient(180deg, rgba(10, 8, 12, 0) 0%, #0a080c 100%);
   z-index: 1;
   pointer-events: none;
