@@ -221,6 +221,7 @@ function initHeroPixelCanvas() {
     if (!drag || drag.id !== e.pointerId) return;
     const pitch = width * (1 + gap);
     if (!pitch) return;
+    if (Math.abs(e.clientX - drag.x) > 6) drag.moved = true;
     const now = performance.now(), prev = pos;
     pos = drag.pos - (e.clientX - drag.x) / pitch;
     drag.v = ((pos - prev) / Math.max(now - drag.t, 1)) * 1000;
@@ -230,7 +231,16 @@ function initHeroPixelCanvas() {
   const end = e => {
     if (!drag || drag.id !== e.pointerId) return;
     const carried = Math.max(-2, Math.min(2, drag.v * 0.18));
+    const toque = !drag.moved && e.type === 'pointerup';
     drag = null;
+    if (toque && window.matchMedia('(max-width: 767.98px)').matches) {
+      const card = document.elementsFromPoint(e.clientX, e.clientY).find(el => el.classList && el.classList.contains('ibj-cf-card'));
+      if (card) {
+        const idx = cards.indexOf(card);
+        const centro = ((Math.round(pos) % count) + count) % count;
+        if (idx === centro) { abrirFoto(card.querySelector('img').src); return; }
+      }
+    }
     settle(Math.round(pos + carried));
   };
   frame.addEventListener('pointerup', end);
@@ -239,6 +249,19 @@ function initHeroPixelCanvas() {
     if (e.key === 'ArrowLeft') { e.preventDefault(); nudge(-1); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); nudge(1); }
   });
+
+  function abrirFoto(src) {
+    const ov = document.createElement('div');
+    ov.className = 'ibj-lightbox';
+    ov.setAttribute('role', 'dialog');
+    ov.setAttribute('aria-label', 'Foto ampliada');
+    ov.innerHTML = '<div class="ibj-lb-foto"></div><button type="button" class="ibj-lb-fechar" aria-label="Fechar">&times;</button>';
+    ov.querySelector('.ibj-lb-foto').style.backgroundImage = 'url("' + src + '")';
+    ov.addEventListener('contextmenu', ev => ev.preventDefault());
+    ov.addEventListener('click', () => { ov.remove(); document.body.style.overflow = ''; });
+    document.body.appendChild(ov);
+    document.body.style.overflow = 'hidden';
+  }
 
   function measure() { width = cards[0].offsetWidth; paint(); }
   measure();
