@@ -173,8 +173,16 @@ function initHeroPixelCanvas() {
   const cards = Array.from(root.querySelectorAll('.ibj-cf-card'));
   const count = cards.length;
   const rotate = 44, depth = 0.6, falloff = 0.56, fade = 0.1, gap = 0.05;
+  const LOAD_RADIUS = 8; // carrega a foto um pouco antes de ela ficar visível
   const ini = Math.max(0, cards.findIndex(c => c.hasAttribute('data-inicial')));
   let pos = ini, target = ini, width = 0, raf = null, drag = null;
+  const imgs = cards.map(c => c.querySelector('img'));
+
+  // só baixa a foto quando o card está perto do centro — evita carregar as 180 de uma vez
+  function carregar(i) {
+    const img = imgs[i];
+    if (img && !img.src && img.dataset.src) img.src = img.dataset.src;
+  }
 
   function paint() {
     if (!width) return;
@@ -192,6 +200,7 @@ function initHeroPixelCanvas() {
       card.style.opacity = String(Math.max(0, 1 - fade * dist) * edge);
       card.style.zIndex = String(100 - Math.round(dist));
       card.style.visibility = dist > 6 ? 'hidden' : 'visible';
+      if (dist <= LOAD_RADIUS) carregar(i);
     });
   }
 
@@ -281,8 +290,8 @@ function initHeroPixelCanvas() {
 
   // Cultos fixos da semana (0 = domingo ... 6 = sábado)
   const SEMANAIS = {
-    0: [{ tipo: 'manha', hora: '9h', titulo: 'EBD - Escola Bíblica Dominical' }, { tipo: 'noite', hora: '18h', titulo: 'Culto de Domingo' }],
-    3: [{ tipo: 'estudo', hora: '19h30', titulo: 'Culto de Quarta-feira' }]
+    0: [{ tipo: 'manha', hora: '9h', titulo: 'EBD - Escola Bíblica Dominical' }, { tipo: 'noite', hora: '18h', titulo: 'Culto de Louvor e Adoração' }],
+    3: [{ tipo: 'estudo', hora: '19h30', titulo: 'Culto de Oração' }]
   };
 
   // Eventos especiais: adicione aqui no formato:
