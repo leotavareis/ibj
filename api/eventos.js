@@ -30,6 +30,7 @@ async function salvarEventos(lista) {
     access: "public",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
     cacheControlMaxAge: 0,
   });
 }
