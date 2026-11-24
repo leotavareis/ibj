@@ -191,6 +191,7 @@ function initHeroPixelCanvas() {
       const edge = Math.min(1, Math.max(0, count / 2 - dist));
       card.style.opacity = String(Math.max(0, 1 - fade * dist) * edge);
       card.style.zIndex = String(100 - Math.round(dist));
+      card.style.visibility = dist > 6 ? 'hidden' : 'visible';
     });
   }
 
