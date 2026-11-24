@@ -560,4 +560,6 @@ body {
 }
 .ibj-cf-card img { width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; }
 
-.ibj-logo-cbb { height: 40px; margin-right: .5rem; }
+.ibj-navbar .navbar-brand { display: flex; align-items: center; gap: .6rem; }
+.ibj-logo-cbb { height: 44px; width: 44px; }
+.ibj-logo-ibj { height: 52px; width: auto; }
