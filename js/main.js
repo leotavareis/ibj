@@ -165,3 +165,80 @@ function initHeroPixelCanvas() {
   });
   resizeObserver.observe(hero);
 }
+
+/* ===== MOMENTOS: carrossel coverflow ===== */
+(function () {
+  const root = document.getElementById('momentos-carousel');
+  if (!root) return;
+  const frame = root.querySelector('.ibj-cf-frame');
+  const cards = Array.from(root.querySelectorAll('.ibj-cf-card'));
+  const count = cards.length;
+  const rotate = 44, depth = 0.6, falloff = 0.56, fade = 0.1, gap = 0.05;
+  let pos = 0, target = 0, width = 0, raf = null, drag = null;
+
+  function paint() {
+    if (!width) return;
+    const pitch = width * (1 + gap);
+    cards.forEach((card, i) => {
+      let offset = i - pos;
+      offset = ((offset % count) + count) % count;
+      if (offset > count / 2) offset -= count;
+      const dist = Math.abs(offset);
+      const ramp = Math.pow(dist, falloff);
+      const tilt = Math.min(rotate * ramp, 82) * Math.sign(offset);
+      card.style.transform =
+        `translateX(calc(-50% + ${offset * pitch}px)) translateZ(${-depth * width * ramp}px) rotateY(${-tilt}deg)`;
+      const edge = Math.min(1, Math.max(0, count / 2 - dist));
+      card.style.opacity = String(Math.max(0, 1 - fade * dist) * edge);
+      card.style.zIndex = String(100 - Math.round(dist));
+    });
+  }
+
+  function settle(t) {
+    if (raf !== null) cancelAnimationFrame(raf);
+    target = t;
+    const step = () => {
+      const rem = target - pos;
+      if (Math.abs(rem) < 0.0004) { pos = target; paint(); raf = null; return; }
+      pos += rem * 0.16;
+      paint();
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+  }
+
+  const nudge = by => settle(Math.round(target) + by);
+
+  frame.addEventListener('pointerdown', e => {
+    if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+    frame.setPointerCapture(e.pointerId);
+    target = pos;
+    drag = { id: e.pointerId, x: e.clientX, pos, v: 0, t: performance.now() };
+  });
+  frame.addEventListener('pointermove', e => {
+    if (!drag || drag.id !== e.pointerId) return;
+    const pitch = width * (1 + gap);
+    if (!pitch) return;
+    const now = performance.now(), prev = pos;
+    pos = drag.pos - (e.clientX - drag.x) / pitch;
+    drag.v = ((pos - prev) / Math.max(now - drag.t, 1)) * 1000;
+    drag.t = now;
+    paint();
+  });
+  const end = e => {
+    if (!drag || drag.id !== e.pointerId) return;
+    const carried = Math.max(-2, Math.min(2, drag.v * 0.18));
+    drag = null;
+    settle(Math.round(pos + carried));
+  };
+  frame.addEventListener('pointerup', end);
+  frame.addEventListener('pointercancel', end);
+  frame.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); nudge(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); nudge(1); }
+  });
+
+  function measure() { width = cards[0].offsetWidth; paint(); }
+  measure();
+  new ResizeObserver(measure).observe(frame);
+})();
