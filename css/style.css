@@ -291,6 +291,8 @@ body {
 /* RODAPÉ */
 .ibj-footer {
   background-color: #1a1a1a;
+  color: rgba(255,255,255,.75);
+  padding: 2.75rem 0 1.25rem;
 }
 
 /* BOTÕES FLUTUANTES */
@@ -646,3 +648,24 @@ body {
 .ibj-btn-maps:hover { background: #146c43; color: #fff; }
 .ibj-btn-waze { background: #33ccff; color: #0b3d52; }
 .ibj-btn-waze:hover { background: #1fbdf2; color: #0b3d52; }
+
+/* RODAPÉ */
+.ibj-ft-grid { display: grid; grid-template-columns: 1.3fr 1fr 1.2fr 1fr; gap: 2rem 2.5rem; }
+.ibj-ft-logo { height: 56px; width: auto; margin-bottom: .75rem; }
+.ibj-ft-marca p { margin: 0; font-size: .9rem; max-width: 240px; }
+.ibj-ft-titulo { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ibj-verde-logo); font-weight: 800; margin: 0 0 .9rem; }
+.ibj-ft-lista { list-style: none; margin: 0; padding: 0; }
+.ibj-ft-lista li { display: flex; flex-direction: column; margin-bottom: .6rem; }
+.ibj-ft-lista b { color: #fff; font-weight: 700; }
+.ibj-ft-lista span, .ibj-ft-end { font-size: .92rem; }
+.ibj-ft-end { font-style: normal; margin-bottom: .75rem; line-height: 1.6; }
+.ibj-ft-links { display: flex; gap: .5rem; flex-wrap: wrap; }
+.ibj-ft-links a, .ibj-ft-social a { color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,.25); border-radius: 2rem; padding: .3rem .85rem; font-size: .85rem; transition: .2s; }
+.ibj-ft-links a:hover, .ibj-ft-social a:hover { background: var(--ibj-verde-logo); border-color: var(--ibj-verde-logo); }
+.ibj-ft-social { display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; }
+.ibj-ft-social i { margin-right: .5rem; }
+.ibj-ft-base { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.12); font-size: .8rem; color: rgba(255,255,255,.5); }
+.ibj-ft-base a { color: rgba(255,255,255,.7); text-decoration: none; }
+.ibj-ft-base a:hover { color: #fff; }
+@media (max-width: 991.98px) { .ibj-ft-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 575.98px) { .ibj-ft-grid { grid-template-columns: 1fr; } .ibj-ft-base { flex-direction: column; text-align: center; } }
