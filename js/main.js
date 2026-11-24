@@ -174,7 +174,8 @@ function initHeroPixelCanvas() {
   const cards = Array.from(root.querySelectorAll('.ibj-cf-card'));
   const count = cards.length;
   const rotate = 44, depth = 0.6, falloff = 0.56, fade = 0.1, gap = 0.05;
-  let pos = 0, target = 0, width = 0, raf = null, drag = null;
+  const ini = Math.max(0, cards.findIndex(c => c.hasAttribute('data-inicial')));
+  let pos = ini, target = ini, width = 0, raf = null, drag = null;
 
   function paint() {
     if (!width) return;
