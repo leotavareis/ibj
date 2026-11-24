@@ -251,7 +251,7 @@ function initHeroPixelCanvas() {
   if (!app) return;
 
   const TIPOS = {
-    manha:    { nome: 'Culto da manhã',  cor: '#f5a623', dot: 'ibj-dot-manha' },
+    manha:    { nome: 'EBD',  cor: '#f5a623', dot: 'ibj-dot-manha' },
     noite:    { nome: 'Culto da noite',  cor: '#4b4ba8', dot: 'ibj-dot-noite' },
     estudo:   { nome: 'Culto de quarta', cor: '#38a73a', dot: 'ibj-dot-estudo' },
     especial: { nome: 'Evento especial', cor: '#d6336c', dot: 'ibj-dot-especial' }
@@ -259,7 +259,7 @@ function initHeroPixelCanvas() {
 
   // Cultos fixos da semana (0 = domingo ... 6 = sábado)
   const SEMANAIS = {
-    0: [{ tipo: 'manha', hora: '9h', titulo: 'Culto de Domingo' }, { tipo: 'noite', hora: '18h', titulo: 'Culto de Domingo' }],
+    0: [{ tipo: 'manha', hora: '9h', titulo: 'EBD - Escola Bíblica Dominical' }, { tipo: 'noite', hora: '18h', titulo: 'Culto de Domingo' }],
     3: [{ tipo: 'estudo', hora: '19h30', titulo: 'Culto de Quarta-feira' }]
   };
 
