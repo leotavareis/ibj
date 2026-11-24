@@ -25,16 +25,21 @@ require.cache[mockPath] = {
       armazenamento.set(pathname, body);
       return { url: `mock://blob/${pathname}`, pathname };
     },
-    list: async ({ prefix }) => {
-      const blobs = [...armazenamento.keys()]
-        .filter((p) => p.startsWith(prefix))
-        .map((p) => ({ url: `mock://blob/${p}`, pathname: p }));
-      return { blobs };
+    get: async (pathname) => {
+      const body = armazenamento.get(pathname);
+      if (body === undefined) return null; // simula 404 (ainda não existe)
+      const stream = new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode(body));
+          controller.close();
+        },
+      });
+      return { statusCode: 200, stream, blob: { pathname } };
     },
   },
 };
 
-// fetch(url) precisa entender nossas URLs mock://
+// fetch(url) só é usado pelo código de verdade pra outras coisas (não pelo Blob mockado)
 const fetchOriginal = global.fetch;
 global.fetch = async (url, opts) => {
   if (typeof url === "string" && url.startsWith("mock://blob/")) {

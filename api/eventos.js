@@ -1,24 +1,22 @@
 const crypto = require("crypto");
-const { put, list } = require("@vercel/blob");
+const { put, get } = require("@vercel/blob");
 const { sessaoValida, lerCorpoJSON } = require("./_lib/auth");
 
 // Guarda a lista de eventos especiais (fora da escala fixa de domingo/quarta)
 // num único arquivo JSON no Vercel Blob. Qualquer visitante pode LER (GET);
 // só quem está logado na área restrita pode escrever (POST/DELETE).
 //
-// Observação: head() do SDK exige a URL completa do blob (com o id único),
-// não o nome do arquivo — por isso usamos list({ prefix }) para encontrar o
-// blob atual pelo nome fixo (addRandomSuffix: false garante que o nome nunca muda).
+// O store foi criado como "private" (padrão atual da Vercel), então toda
+// leitura/escrita usa access:"private" — get()/put() cuidam da autenticação,
+// a leitura nunca é exposta como URL pública direta ao navegador.
 const BLOB_PATH = "ibj-eventos-especiais.json";
 
 async function lerEventos() {
   try {
-    const { blobs } = await list({ prefix: BLOB_PATH, limit: 1 });
-    const atual = blobs.find((b) => b.pathname === BLOB_PATH);
-    if (!atual) return [];
-    const resp = await fetch(atual.url, { cache: "no-store" });
-    if (!resp.ok) return [];
-    const lista = await resp.json();
+    const resultado = await get(BLOB_PATH, { access: "private" });
+    if (!resultado) return []; // ainda não existe nenhum evento salvo
+    const texto = await new Response(resultado.stream).text();
+    const lista = JSON.parse(texto);
     return Array.isArray(lista) ? lista : [];
   } catch {
     return [];
@@ -27,7 +25,7 @@ async function lerEventos() {
 
 async function salvarEventos(lista) {
   await put(BLOB_PATH, JSON.stringify(lista, null, 2), {
-    access: "public",
+    access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
     allowOverwrite: true,
