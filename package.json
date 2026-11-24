@@ -1,0 +1,8 @@
+{
+  "name": "ibj-site",
+  "private": true,
+  "description": "Site da Igreja Batista Jardins. Site estático (HTML/CSS/JS); as únicas funções em Node.js ficam em /api, para a área restrita (login e eventos da agenda).",
+  "dependencies": {
+    "@vercel/blob": "^0.27.1"
+  }
+}

@@ -294,9 +294,10 @@ function initHeroPixelCanvas() {
     3: [{ tipo: 'estudo', hora: '19h30', titulo: 'Culto de Oração' }]
   };
 
-  // Eventos especiais: adicione aqui no formato:
-  // { data: '2026-12-24', hora: '19h', titulo: 'Culto de Natal', local: 'Templo principal' }
-  const ESPECIAIS = [];
+  // Eventos especiais cadastrados pelo administrador na área restrita (/admin).
+  // Começa vazio e é preenchido pela API assim que a resposta chegar — se a API
+  // falhar por qualquer motivo, a agenda continua funcionando só com os cultos fixos.
+  let ESPECIAIS = [];
 
   const pad = n => String(n).padStart(2, '0');
   const chave = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -322,6 +323,79 @@ function initHeroPixelCanvas() {
     return null;
   }
 
+  // ===== Adicionar à agenda do celular (Google Calendar no Android, arquivo .ics no iOS) =====
+  const pad2 = n => String(n).padStart(2, '0');
+  const DIAS_RRULE = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+
+  function horaParaMinutos(hora) {
+    const m = /(\d+)h(\d+)?/.exec(hora || '');
+    return m ? { h: parseInt(m[1], 10), m: m[2] ? parseInt(m[2], 10) : 0 } : { h: 9, m: 0 };
+  }
+
+  function montarEventoCalendario(e, diaBase) {
+    const { h, m } = horaParaMinutos(e.hora);
+    const inicio = new Date(diaBase);
+    inicio.setHours(h, m, 0, 0);
+    const duracaoMin = e.tipo === 'manha' ? 60 : 90;
+    const fim = new Date(inicio.getTime() + duracaoMin * 60000);
+    const rrule = e.tipo !== 'especial' ? `RRULE:FREQ=WEEKLY;BYDAY=${DIAS_RRULE[diaBase.getDay()]}` : '';
+    return { inicio, fim, rrule };
+  }
+
+  function formatarDataHoraLocal(d) {
+    return `${d.getFullYear()}${pad2(d.getMonth() + 1)}${pad2(d.getDate())}T${pad2(d.getHours())}${pad2(d.getMinutes())}00`;
+  }
+
+  function ehIOS() {
+    return /iP(hone|od|ad)/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+
+  const ENDERECO_IGREJA = 'Rua Sebastião Piau, 90, Cidade Rosas II, São Gonçalo do Amarante/RN';
+
+  function baixarICS(e, diaBase) {
+    const { inicio, fim, rrule } = montarEventoCalendario(e, diaBase);
+    const linhas = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Igreja Batista Jardins//Agenda//PT-BR', 'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT',
+      `UID:ibj-${e.tipo}-${chave(diaBase)}-${Date.now()}@igrejabatistajardins`,
+      `DTSTAMP:${formatarDataHoraLocal(new Date())}Z`,
+      `DTSTART:${formatarDataHoraLocal(inicio)}`,
+      `DTEND:${formatarDataHoraLocal(fim)}`,
+      rrule,
+      `SUMMARY:${e.titulo}`,
+      `LOCATION:${e.local || ENDERECO_IGREJA}`,
+      'END:VEVENT', 'END:VCALENDAR',
+    ].filter(Boolean).join('\r\n');
+    const blob = new Blob([linhas], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${e.titulo.replace(/\s+/g, '-')}.ics`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  function abrirGoogleCalendar(e, diaBase) {
+    const { inicio, fim, rrule } = montarEventoCalendario(e, diaBase);
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: e.titulo,
+      dates: `${formatarDataHoraLocal(inicio)}/${formatarDataHoraLocal(fim)}`,
+      location: e.local || ENDERECO_IGREJA,
+      ctz: 'America/Fortaleza',
+    });
+    if (rrule) params.set('recur', rrule);
+    window.open(`https://www.google.com/calendar/render?${params.toString()}`, '_blank');
+  }
+
+  function adicionarAgenda(e, diaBase) {
+    if (ehIOS()) baixarICS(e, diaBase);
+    else abrirGoogleCalendar(e, diaBase);
+  }
+
   function renderPainel() {
     const evs = eventosDoDia(sel);
     const diaSem = sel.toLocaleDateString('pt-BR', { weekday: 'long' });
@@ -333,7 +407,8 @@ function initHeroPixelCanvas() {
       h += evs.map((e, i) => {
         const t = TIPOS[e.tipo];
         return `<div class="ibj-ag-evento" style="--c:${t.cor};animation-delay:${i * 80}ms"><div class="ibj-ag-hora">${e.hora}</div>
-          <div><strong>${e.titulo}</strong><span>${t.nome}${e.local ? ' · ' + e.local : ''}</span></div></div>`;
+          <div class="ibj-ag-evento-info"><strong>${e.titulo}</strong><span>${t.nome}${e.local ? ' · ' + e.local : ''}</span></div>
+          <button type="button" class="ibj-ag-addcal" data-i="${i}" aria-label="Adicionar ${e.titulo} à agenda do celular"><i class="fa-regular fa-calendar-plus"></i></button></div>`;
       }).join('');
     } else {
       h += '<p class="ibj-ag-vazio">Sem eventos neste dia.<br>Escolha um dia destacado no calendário.</p>';
@@ -344,6 +419,10 @@ function initHeroPixelCanvas() {
       h += `<div class="ibj-ag-contagem">${txt}</div>`;
     }
     painel.innerHTML = h;
+    painel.querySelectorAll('.ibj-ag-addcal').forEach(botao => {
+      const evento = evs[Number(botao.dataset.i)];
+      botao.addEventListener('click', () => adicionarAgenda(evento, sel));
+    });
   }
 
   function renderGrade() {
@@ -370,4 +449,16 @@ function initHeroPixelCanvas() {
 
   renderGrade();
   renderPainel();
+
+  // Busca os eventos especiais cadastrados na área restrita e atualiza a agenda.
+  fetch('/api/eventos')
+    .then(r => (r.ok ? r.json() : []))
+    .then(lista => {
+      if (Array.isArray(lista) && lista.length) {
+        ESPECIAIS = lista;
+        renderGrade();
+        renderPainel();
+      }
+    })
+    .catch(() => {});
 })();

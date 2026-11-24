@@ -1,0 +1,56 @@
+.ibj-admin-body {
+  background: var(--ibj-cinza);
+  min-height: 100vh;
+}
+.ibj-admin-topo {
+  background: #1a1a1a;
+}
+.ibj-admin-voltar {
+  color: rgba(255, 255, 255, .8);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .9rem;
+}
+.ibj-admin-voltar:hover { color: #fff; }
+.ibj-admin-marca {
+  color: rgba(255, 255, 255, .55);
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 700;
+}
+
+.ibj-ev-item {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  background: #fff;
+  border-radius: .9rem;
+  padding: .75rem 1rem;
+  margin-bottom: .6rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+}
+.ibj-ev-data {
+  background: var(--ibj-bordo);
+  color: #fff;
+  border-radius: .7rem;
+  width: 54px;
+  flex: 0 0 auto;
+  text-align: center;
+  padding: .3rem 0;
+  line-height: 1.1;
+}
+.ibj-ev-data b { display: block; font-size: 1.3rem; }
+.ibj-ev-data small { font-size: .62rem; text-transform: uppercase; }
+.ibj-ev-info { flex: 1; min-width: 0; }
+.ibj-ev-info strong { display: block; color: var(--ibj-titulo); }
+.ibj-ev-info span { font-size: .85rem; color: var(--ibj-texto); }
+.ibj-ev-apagar {
+  flex: 0 0 auto;
+  width: 34px; height: 34px;
+  border: 0; border-radius: 50%;
+  background: var(--ibj-cinza);
+  color: #c0392b;
+  transition: background .2s, color .2s;
+}
+.ibj-ev-apagar:hover { background: #c0392b; color: #fff; }

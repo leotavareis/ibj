@@ -678,8 +678,23 @@ section[id], header#topo {
 .ibj-ag-titulo-dia { font-weight: 800; color: var(--ibj-titulo); text-transform: capitalize; }
 .ibj-ag-evento { display: flex; gap: .9rem; align-items: center; padding: .75rem .9rem; border-radius: .9rem; background: var(--ibj-cinza); margin-bottom: .6rem; border-left: 5px solid var(--c); animation: agIn .35s ease both; }
 .ibj-ag-hora { font-weight: 800; font-size: 1.15rem; color: var(--c); min-width: 3.4rem; }
+.ibj-ag-evento-info { flex: 1; min-width: 0; }
 .ibj-ag-evento strong { display: block; color: var(--ibj-titulo); }
 .ibj-ag-evento span { font-size: .9rem; }
+.ibj-ag-addcal {
+  flex: 0 0 auto;
+  width: 34px; height: 34px;
+  border: 0; border-radius: 50%;
+  background: #fff;
+  color: var(--c, var(--ibj-verde));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+  transition: transform .15s ease, background .2s ease, color .2s ease;
+}
+.ibj-ag-addcal:hover, .ibj-ag-addcal:active { background: var(--c, var(--ibj-verde)); color: #fff; transform: scale(1.06); }
+/* o atalho de agenda nativa só faz sentido no celular */
+@media (min-width: 768px) { .ibj-ag-addcal { display: none; } }
 .ibj-ag-vazio { color: #777; margin: auto; text-align: center; }
 .ibj-ag-contagem { margin-top: auto; padding-top: .75rem; font-size: .85rem; color: #666; border-top: 1px dashed #ddd; }
 @keyframes agIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
