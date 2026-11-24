@@ -244,3 +244,99 @@ function initHeroPixelCanvas() {
   measure();
   new ResizeObserver(measure).observe(frame);
 })();
+
+/* ===== AGENDA ===== */
+(function () {
+  const app = document.getElementById('agenda-app');
+  if (!app) return;
+
+  const TIPOS = {
+    manha:    { nome: 'Culto da manhã',  cor: '#f5a623', dot: 'ibj-dot-manha' },
+    noite:    { nome: 'Culto da noite',  cor: '#4b4ba8', dot: 'ibj-dot-noite' },
+    estudo:   { nome: 'Culto de quarta', cor: '#38a73a', dot: 'ibj-dot-estudo' },
+    especial: { nome: 'Evento especial', cor: '#d6336c', dot: 'ibj-dot-especial' }
+  };
+
+  // Cultos fixos da semana (0 = domingo ... 6 = sábado)
+  const SEMANAIS = {
+    0: [{ tipo: 'manha', hora: '9h', titulo: 'Culto de Domingo' }, { tipo: 'noite', hora: '18h', titulo: 'Culto de Domingo' }],
+    3: [{ tipo: 'estudo', hora: '19h30', titulo: 'Culto de Quarta-feira' }]
+  };
+
+  // Eventos especiais: adicione aqui no formato:
+  // { data: '2026-12-24', hora: '19h', titulo: 'Culto de Natal', local: 'Templo principal' }
+  const ESPECIAIS = [];
+
+  const pad = n => String(n).padStart(2, '0');
+  const chave = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const eventosDoDia = d => {
+    const lista = (SEMANAIS[d.getDay()] || []).map(e => ({ ...e }));
+    ESPECIAIS.filter(e => e.data === chave(d)).forEach(e => lista.push({ tipo: 'especial', hora: e.hora, titulo: e.titulo, local: e.local }));
+    return lista;
+  };
+
+  const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  let mes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+  let sel = new Date(hoje);
+
+  const grade = document.getElementById('ag-grade');
+  const rotuloMes = document.getElementById('ag-mes');
+  const painel = document.getElementById('ag-painel');
+
+  function proximo() {
+    for (let i = 0; i < 400; i++) {
+      const d = new Date(hoje); d.setDate(d.getDate() + i);
+      if (eventosDoDia(d).length) return i;
+    }
+    return null;
+  }
+
+  function renderPainel() {
+    const evs = eventosDoDia(sel);
+    const diaSem = sel.toLocaleDateString('pt-BR', { weekday: 'long' });
+    const mesCurto = sel.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '');
+    const ehHoje = chave(sel) === chave(hoje);
+    let h = `<div class="ibj-ag-data"><div class="ibj-ag-num"><b>${sel.getDate()}</b><small>${mesCurto}</small></div>
+      <div><div class="ibj-ag-rotulo">${ehHoje ? 'Hoje' : 'Dia selecionado'}</div><div class="ibj-ag-titulo-dia">${diaSem}</div></div></div>`;
+    if (evs.length) {
+      h += evs.map((e, i) => {
+        const t = TIPOS[e.tipo];
+        return `<div class="ibj-ag-evento" style="--c:${t.cor};animation-delay:${i * 80}ms"><div class="ibj-ag-hora">${e.hora}</div>
+          <div><strong>${e.titulo}</strong><span>${t.nome}${e.local ? ' · ' + e.local : ''}</span></div></div>`;
+      }).join('');
+    } else {
+      h += '<p class="ibj-ag-vazio">Sem eventos neste dia.<br>Escolha um dia destacado no calendário.</p>';
+    }
+    const p = proximo();
+    if (p !== null) {
+      const txt = p === 0 ? 'Tem programação hoje!' : p === 1 ? 'Próximo evento: amanhã' : `Próximo evento em ${p} dias`;
+      h += `<div class="ibj-ag-contagem">${txt}</div>`;
+    }
+    painel.innerHTML = h;
+  }
+
+  function renderGrade() {
+    { const t = mes.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }); rotuloMes.textContent = t.charAt(0).toUpperCase() + t.slice(1); }
+    grade.innerHTML = '';
+    for (let i = 0; i < mes.getDay(); i++) grade.insertAdjacentHTML('beforeend', '<span class="ibj-ag-dia vazio"></span>');
+    const total = new Date(mes.getFullYear(), mes.getMonth() + 1, 0).getDate();
+    for (let n = 1; n <= total; n++) {
+      const d = new Date(mes.getFullYear(), mes.getMonth(), n);
+      const evs = eventosDoDia(d);
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ibj-ag-dia' + (evs.length ? ' tem' : ' sem') + (chave(d) === chave(hoje) ? ' hoje' : '') + (chave(d) === chave(sel) ? ' sel' : '');
+      const dots = [...new Set(evs.map(e => e.tipo))].map(t => `<i class="ibj-dot ${TIPOS[t].dot}"></i>`).join('');
+      b.innerHTML = `${n}<span class="ibj-ag-dots">${dots}</span>`;
+      b.setAttribute('aria-label', `${n} de ${rotuloMes.textContent}${evs.length ? ', ' + evs.length + ' evento(s)' : ''}`);
+      b.addEventListener('click', () => { sel = d; renderGrade(); renderPainel(); });
+      grade.appendChild(b);
+    }
+  }
+
+  document.getElementById('ag-prev').addEventListener('click', () => { mes = new Date(mes.getFullYear(), mes.getMonth() - 1, 1); renderGrade(); });
+  document.getElementById('ag-next').addEventListener('click', () => { mes = new Date(mes.getFullYear(), mes.getMonth() + 1, 1); renderGrade(); });
+
+  renderGrade();
+  renderPainel();
+})();

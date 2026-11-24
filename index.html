@@ -40,7 +40,7 @@
       <ul class="navbar-nav ms-auto text-center">
         <li class="nav-item"><a class="nav-link" href="#igreja">A Igreja</a></li>
         <li class="nav-item"><a class="nav-link" href="#momentos">Momentos</a></li>
-        <li class="nav-item"><a class="nav-link" href="#cultos">Cultos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#agenda">Agenda</a></li>
         <li class="nav-item"><a class="nav-link" href="#oracao">Oração</a></li>
         <li class="nav-item"><a class="nav-link" href="#local">Localização</a></li>
         <li class="nav-item"><a class="nav-link btn btn-success text-white ms-lg-2 mt-2 mt-lg-0" href="#oracao">Pedido de Oração</a></li>
@@ -58,7 +58,7 @@
     <h1 class="visually-hidden">Igreja Batista Jardins</h1>
     <p class="visually-hidden">Bairro Jardins · São Gonçalo do Amarante/RN</p>
     <div class="ibj-hero-botoes">
-      <a href="#cultos" class="ibj-flow"><svg class="ibj-flow-seta ibj-flow-seta--esq" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span class="ibj-flow-texto">Horários de Culto</span><span class="ibj-flow-circulo" aria-hidden="true"></span><svg class="ibj-flow-seta ibj-flow-seta--dir" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      <a href="#agenda" class="ibj-flow"><svg class="ibj-flow-seta ibj-flow-seta--esq" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span class="ibj-flow-texto">Nossa Agenda</span><span class="ibj-flow-circulo" aria-hidden="true"></span><svg class="ibj-flow-seta ibj-flow-seta--dir" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
       <a href="#local" class="ibj-flow"><svg class="ibj-flow-seta ibj-flow-seta--esq" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span class="ibj-flow-texto">Como Chegar</span><span class="ibj-flow-circulo" aria-hidden="true"></span><svg class="ibj-flow-seta ibj-flow-seta--dir" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
     </div>
   </div>
@@ -283,32 +283,28 @@
   </div>
 </section>
 
-<!-- CULTOS -->
-<section id="cultos" class="py-5 py-md-6 ibj-bg-cinza">
+<!-- AGENDA -->
+<section id="agenda" class="py-5 py-md-6 ibj-bg-cinza">
   <div class="container">
-    <h2 class="ibj-titulo text-center mb-4">Horários de Culto</h2>
-    <div class="row g-4 justify-content-center">
-      <div class="col-10 col-md-4">
-        <div class="card ibj-card h-100 text-center p-4">
-          <i class="fa-solid fa-sun ibj-icon mb-3"></i>
-          <h3 class="h5 fw-700">Domingo</h3>
-          <p class="mb-0 fs-5">9h</p>
+    <h2 class="ibj-titulo text-center mb-2">Nossa Agenda</h2>
+    <p class="ibj-texto text-center mb-4">Toque em um dia destacado para ver os cultos e eventos.</p>
+    <div class="ibj-agenda mx-auto" id="agenda-app">
+      <div class="ibj-ag-cal">
+        <div class="ibj-ag-topo">
+          <button type="button" class="ibj-ag-nav" id="ag-prev" aria-label="Mês anterior">&#8249;</button>
+          <div class="ibj-ag-mes" id="ag-mes" aria-live="polite"></div>
+          <button type="button" class="ibj-ag-nav" id="ag-next" aria-label="Próximo mês">&#8250;</button>
+        </div>
+        <div class="ibj-ag-semana"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div>
+        <div class="ibj-ag-grade" id="ag-grade"></div>
+        <div class="ibj-ag-legenda">
+          <span><i class="ibj-dot ibj-dot-manha"></i>Culto da manhã</span>
+          <span><i class="ibj-dot ibj-dot-noite"></i>Culto da noite</span>
+          <span><i class="ibj-dot ibj-dot-estudo"></i>Culto de quarta</span>
+          <span><i class="ibj-dot ibj-dot-especial"></i>Evento especial</span>
         </div>
       </div>
-      <div class="col-10 col-md-4">
-        <div class="card ibj-card h-100 text-center p-4">
-          <i class="fa-solid fa-moon ibj-icon mb-3"></i>
-          <h3 class="h5 fw-700">Domingo</h3>
-          <p class="mb-0 fs-5">18h</p>
-        </div>
-      </div>
-      <div class="col-10 col-md-4">
-        <div class="card ibj-card h-100 text-center p-4">
-          <i class="fa-solid fa-book-bible ibj-icon mb-3"></i>
-          <h3 class="h5 fw-700">Quarta-feira</h3>
-          <p class="mb-0 fs-5">19h30</p>
-        </div>
-      </div>
+      <aside class="ibj-ag-painel" id="ag-painel" aria-live="polite"></aside>
     </div>
   </div>
 </section>
