@@ -283,8 +283,8 @@ function initHeroPixelCanvas() {
 
   const TIPOS = {
     manha:    { nome: 'EBD',  cor: '#f5a623', dot: 'ibj-dot-manha' },
-    noite:    { nome: 'Culto da noite',  cor: '#4b4ba8', dot: 'ibj-dot-noite' },
-    estudo:   { nome: 'Culto de quarta', cor: '#38a73a', dot: 'ibj-dot-estudo' },
+    noite:    { nome: 'Louvor e Adoração', cor: '#4b4ba8', dot: 'ibj-dot-noite' },
+    estudo:   { nome: 'Oração', cor: '#38a73a', dot: 'ibj-dot-estudo' },
     especial: { nome: 'Evento especial', cor: '#d6336c', dot: 'ibj-dot-especial' }
   };
 
