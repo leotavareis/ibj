@@ -464,12 +464,24 @@ body {
     linear-gradient(90deg, rgba(30, 10, 12, .92) 0%, rgba(54, 20, 23, .82) 40%, rgba(20, 20, 20, .35) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, .25) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, .45) 100%);
 }
+/* transições suaves: topo (vem do hero escuro) e base (vai para o branco) */
+.ibj-igreja-mascara::before,
 .ibj-igreja-mascara::after {
   content: '';
   position: absolute;
-  inset: auto 0 0 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--ibj-verde-logo), transparent 70%);
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+.ibj-igreja-mascara::before {
+  top: 0;
+  height: 160px;
+  background: linear-gradient(180deg, #0a080c 0%, rgba(10, 8, 12, .7) 35%, rgba(10, 8, 12, 0) 100%);
+}
+.ibj-igreja-mascara::after {
+  bottom: 0;
+  height: 180px;
+  background: linear-gradient(0deg, #fff 0%, rgba(255, 255, 255, .75) 30%, rgba(255, 255, 255, 0) 100%);
 }
 .ibj-igreja-conteudo { z-index: 2; }
 .ibj-igreja-painel { max-width: 620px; }
@@ -604,3 +616,16 @@ body {
 .ibj-ag-contagem { margin-top: auto; padding-top: .75rem; font-size: .85rem; color: #666; border-top: 1px dashed #ddd; }
 @keyframes agIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (max-width: 767.98px) { .ibj-agenda { grid-template-columns: 1fr; } .ibj-ag-cal, .ibj-ag-painel { padding: 1rem; } }
+
+/* base do hero escurece até o tom da próxima seção */
+.ibj-hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 160px;
+  background: linear-gradient(180deg, rgba(10, 8, 12, 0) 0%, #0a080c 100%);
+  z-index: 1;
+  pointer-events: none;
+}
