@@ -561,5 +561,5 @@ body {
 .ibj-cf-card img { width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; }
 
 .ibj-navbar .navbar-brand { display: flex; align-items: center; gap: .6rem; }
-.ibj-logo-cbb { height: 44px; width: 44px; }
-.ibj-logo-ibj { height: 52px; width: auto; }
+.ibj-logo-cbb { height: 34px; width: 34px; transform: translateY(4px); }
+.ibj-logo-ibj { height: 42px; width: auto; }
