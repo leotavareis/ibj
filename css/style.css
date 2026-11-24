@@ -61,6 +61,16 @@ body {
   color: #fff;
 }
 
+/* evita que o menu fixo cubra o título ao clicar num link do menu */
+section[id], header#topo {
+  scroll-margin-top: 84px;
+}
+@media (max-width: 575.98px) {
+  section[id], header#topo {
+    scroll-margin-top: 124px;
+  }
+}
+
 /* HERO */
 .ibj-hero {
   position: relative;
@@ -276,6 +286,27 @@ body {
   color: var(--ibj-bordo);
   margin: 1.25rem 0;
 }
+
+/* ===== Sistema único de botões ===== */
+.ibj-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .75rem 1.5rem;
+  border-radius: .9rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.ibj-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0, 0, 0, .15); }
+.ibj-btn:active { transform: translateY(0); box-shadow: none; }
+.ibj-btn-primary { background: var(--ibj-verde); color: #fff; }
+.ibj-btn-primary:hover, .ibj-btn-primary:focus-visible { background: #146c43; color: #fff; }
+.ibj-navbar .ibj-btn-nav { padding: .5rem 1.25rem; border-radius: 2rem; font-weight: 700; }
+.ibj-btn-lg { padding: 1rem 1.5rem; font-size: 1.05rem; }
 
 /* FORM */
 .ibj-form .form-control {
@@ -528,6 +559,41 @@ body {
 .ibj-igreja-pastor strong { color: #fff; }
 .ibj-igreja-pastor a { color: var(--ibj-verde-logo); text-decoration: none; }
 .ibj-igreja-pastor a:hover { text-decoration: underline; }
+
+/* ===== Eyebrow centralizado (padrão para títulos de seção) ===== */
+.ibj-eyebrow-center {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  margin-bottom: .5rem;
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ibj-verde);
+}
+.ibj-eyebrow-center::before,
+.ibj-eyebrow-center::after {
+  content: '';
+  width: 1.4rem;
+  height: 2px;
+  background: var(--ibj-verde);
+}
+@media (max-width: 575.98px) {
+  .ibj-eyebrow-center { font-size: .72rem; gap: .5rem; letter-spacing: .12em; }
+  .ibj-eyebrow-center::before, .ibj-eyebrow-center::after { width: 1rem; }
+}
+
+/* Cartão do formulário de oração, no mesmo padrão visual da Agenda/Localização */
+.ibj-form-card {
+  background: var(--ibj-cinza);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .06);
+}
+@media (max-width: 575.98px) {
+  .ibj-form-card { padding: 1.25rem; border-radius: 1rem; }
+}
 
 @media (min-width: 992px) {
   .ibj-igreja { padding: 7rem 0; min-height: 640px; }

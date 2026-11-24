@@ -1,6 +1,5 @@
 // Número de WhatsApp da igreja — formato internacional sem símbolos, ex: 5584999999999
-// PENDENTE: Leandro vai enviar o número oficial da igreja.
-const WHATSAPP_IGREJA = "";
+const WHATSAPP_IGREJA = "5584981371496";
 
 document.addEventListener("DOMContentLoaded", () => {
   const anoAtual = document.getElementById("anoAtual");

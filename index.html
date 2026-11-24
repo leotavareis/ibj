@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Igreja Batista Jardins | São Gonçalo do Amarante/RN</title>
 <meta name="description" content="Igreja Batista Jardins - bairro Jardins, São Gonçalo do Amarante/RN. Cultos domingo 9h e 18h, quarta-feira 19h30.">
+<link rel="canonical" href="https://ibj-site-sand.vercel.app/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Igreja Batista Jardins">
+<meta property="og:title" content="Igreja Batista Jardins | São Gonçalo do Amarante/RN">
+<meta property="og:description" content="Cultos domingo 9h (EBD) e 18h, quarta-feira 19h30. Venha nos visitar no bairro Jardins.">
+<meta property="og:url" content="https://ibj-site-sand.vercel.app/">
+<meta property="og:image" content="https://ibj-site-sand.vercel.app/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Igreja Batista Jardins | São Gonçalo do Amarante/RN">
+<meta name="twitter:description" content="Cultos domingo 9h (EBD) e 18h, quarta-feira 19h30. Venha nos visitar no bairro Jardins.">
+<meta name="twitter:image" content="https://ibj-site-sand.vercel.app/img/og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +58,7 @@
         <li class="nav-item"><a class="nav-link" href="#agenda">Agenda</a></li>
         <li class="nav-item"><a class="nav-link" href="#oracao">Oração</a></li>
         <li class="nav-item"><a class="nav-link" href="#local">Localização</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-success text-white ms-lg-2 mt-2 mt-lg-0" href="#oracao">Pedido de Oração</a></li>
+        <li class="nav-item"><a class="nav-link ibj-btn ibj-btn-primary ibj-btn-nav ms-lg-2 mt-2 mt-lg-0" href="#oracao">Pedido de Oração</a></li>
       </ul>
     </div>
   </div>
@@ -93,7 +108,11 @@
 <!-- MOMENTOS -->
 <section id="momentos" class="py-5 py-md-6">
   <div class="container">
-    <h2 class="ibj-titulo text-center mb-4">Momentos da Igreja</h2>
+    <div class="text-center mb-4">
+      <span class="ibj-eyebrow-center">Galeria</span>
+      <h2 class="ibj-titulo mb-2">Momentos da Igreja</h2>
+      <p class="ibj-texto mb-0">Um retrato da nossa caminhada em comunidade, culto após culto.</p>
+    </div>
     <div class="ibj-cf" id="momentos-carousel" role="region" aria-roledescription="carousel" aria-label="Momentos da Igreja">
       <div class="ibj-cf-frame" tabindex="0">
         <div class="ibj-cf-stage">
@@ -286,8 +305,11 @@
 <!-- AGENDA -->
 <section id="agenda" class="py-5 py-md-6 ibj-bg-cinza">
   <div class="container">
-    <h2 class="ibj-titulo text-center mb-2">Nossa Agenda</h2>
-    <p class="ibj-texto text-center mb-4">Toque em um dia destacado para ver os cultos e eventos.</p>
+    <div class="text-center mb-4">
+      <span class="ibj-eyebrow-center">Cultos e eventos</span>
+      <h2 class="ibj-titulo mb-2">Nossa Agenda</h2>
+      <p class="ibj-texto mb-0">Toque em um dia destacado para ver os cultos e eventos.</p>
+    </div>
     <div class="ibj-agenda mx-auto" id="agenda-app">
       <div class="ibj-ag-cal">
         <div class="ibj-ag-topo">
@@ -314,13 +336,14 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-lg-7 text-center">
-        <h2 class="ibj-titulo mb-3">Pedido de Oração</h2>
+        <span class="ibj-eyebrow-center">Estamos com você</span>
+        <h2 class="ibj-titulo mb-2">Pedido de Oração</h2>
         <p class="ibj-texto mb-4">Envie seu pedido de oração e nossa equipe pastoral irá orar com você.</p>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-12 col-lg-7">
-        <form id="formOracao" class="ibj-form">
+        <form id="formOracao" class="ibj-form ibj-form-card">
           <div class="mb-3">
             <label for="nomeOracao" class="form-label">Nome</label>
             <input type="text" class="form-control" id="nomeOracao" required>
@@ -329,7 +352,7 @@
             <label for="pedidoOracao" class="form-label">Seu pedido</label>
             <textarea class="form-control" id="pedidoOracao" rows="4" required></textarea>
           </div>
-          <button type="submit" class="btn btn-success btn-lg w-100">
+          <button type="submit" class="ibj-btn ibj-btn-primary ibj-btn-lg w-100">
             <i class="fa-brands fa-whatsapp me-2"></i>Enviar pelo WhatsApp
           </button>
         </form>
@@ -341,7 +364,11 @@
 <!-- LOCALIZAÇÃO -->
 <section id="local" class="py-5 py-md-6 ibj-bg-cinza">
   <div class="container">
-    <h2 class="ibj-titulo text-center mb-4">Localização</h2>
+    <div class="text-center mb-4">
+      <span class="ibj-eyebrow-center">Visite-nos</span>
+      <h2 class="ibj-titulo mb-2">Localização</h2>
+      <p class="ibj-texto mb-0">Você é bem-vindo(a) em qualquer um dos nossos encontros.</p>
+    </div>
     <div class="row g-4 align-items-stretch">
       <div class="col-12 col-lg-6">
         <div id="ibjMapa" class="ibj-mapa rounded overflow-hidden shadow-sm" role="img" aria-label="Mapa da Igreja Batista Jardins" data-lat="-5.747504" data-lon="-35.300698"></div>
