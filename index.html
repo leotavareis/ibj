@@ -347,11 +347,24 @@
         <div id="ibjMapa" class="ibj-mapa rounded overflow-hidden shadow-sm" role="img" aria-label="Mapa da Igreja Batista Jardins" data-lat="-5.747504" data-lon="-35.300698"></div>
       </div>
       <div class="col-12 col-lg-6 d-flex flex-column justify-content-center">
-        <p class="ibj-texto mb-3"><i class="fa-solid fa-location-dot ibj-icon-sm me-2"></i>Rua Sebastião Piau, 90, Cidade Rosas II<br>São Gonçalo do Amarante/RN</p>
-        <p class="ibj-texto mb-3"><i class="fa-solid fa-clock ibj-icon-sm me-2"></i>Domingo 9h e 18h · Quarta 19h30</p>
-        <a href="https://www.google.com/maps?q=Rua+Sebasti%C3%A3o+Piau,+90,+Cidade+Rosas+II,+S%C3%A3o+Gon%C3%A7alo+do+Amarante,+RN" target="_blank" rel="noopener" class="btn btn-outline-success">
-          Traçar rota no Google Maps
-        </a>
+        <div class="ibj-loc-info">
+          <div class="ibj-loc-bloco">
+            <span class="ibj-loc-rotulo">Endereço</span>
+            <strong class="ibj-loc-destaque">Rua Sebastião Piau, 90</strong>
+            <span>Cidade Rosas II · São Gonçalo do Amarante/RN</span>
+          </div>
+          <div class="ibj-loc-bloco">
+            <span class="ibj-loc-rotulo">Quando nos encontrar</span>
+            <ul class="ibj-loc-horarios">
+              <li><b>Domingo</b><span>EBD às 9h · Culto às 18h</span></li>
+              <li><b>Quarta-feira</b><span>Culto às 19h30</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibj-loc-botoes">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=-5.747504,-35.300698" target="_blank" rel="noopener" class="btn ibj-btn-maps"><i class="fa-brands fa-google me-2"></i>Google Maps</a>
+          <a href="https://waze.com/ul?ll=-5.747504,-35.300698&navigate=yes" target="_blank" rel="noopener" class="btn ibj-btn-waze"><i class="fa-brands fa-waze me-2"></i>Waze</a>
+        </div>
       </div>
     </div>
   </div>
@@ -367,7 +380,7 @@
       </div>
       <div class="col-12 col-md-4">
         <h3 class="h5 text-white fw-700 mb-3">Cultos</h3>
-        <p class="text-white-75 mb-0">Domingo: 9h e 18h<br>Quarta-feira: 19h30</p>
+        <p class="text-white-75 mb-0">Domingo: EBD 9h · Culto 18h<br>Quarta-feira: 19h30</p>
       </div>
       <div class="col-12 col-md-4">
         <h3 class="h5 text-white fw-700 mb-3">Siga-nos</h3>

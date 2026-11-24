@@ -629,3 +629,20 @@ body {
   z-index: 1;
   pointer-events: none;
 }
+
+/* LOCALIZAÇÃO */
+.ibj-loc-info { background: #fff; border-radius: 1.25rem; box-shadow: 0 6px 24px rgba(0,0,0,.07); padding: .5rem 1.5rem; }
+.ibj-loc-bloco { display: flex; flex-direction: column; gap: .15rem; padding: 1.1rem 0; }
+.ibj-loc-bloco + .ibj-loc-bloco { border-top: 1px dashed #ddd; }
+.ibj-loc-rotulo { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--ibj-verde); }
+.ibj-loc-destaque { font-size: 1.25rem; color: var(--ibj-titulo); }
+.ibj-loc-horarios { list-style: none; margin: .25rem 0 0; padding: 0; }
+.ibj-loc-horarios li { display: flex; justify-content: space-between; gap: 1rem; padding: .35rem 0; }
+.ibj-loc-horarios b { color: var(--ibj-titulo); }
+.ibj-loc-botoes { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
+.ibj-loc-botoes .btn { flex: 1 1 200px; padding: .8rem 1rem; font-weight: 700; border-radius: .9rem; transition: transform .15s, box-shadow .2s; }
+.ibj-loc-botoes .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.15); }
+.ibj-btn-maps { background: var(--ibj-verde); color: #fff; }
+.ibj-btn-maps:hover { background: #146c43; color: #fff; }
+.ibj-btn-waze { background: #33ccff; color: #0b3d52; }
+.ibj-btn-waze:hover { background: #1fbdf2; color: #0b3d52; }
